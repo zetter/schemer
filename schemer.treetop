@@ -1,4 +1,8 @@
 grammar Schemer
+  rule expression
+    atom / list
+  end
+
   rule atom
     [^\ \( \)]+ {
       def to_ast
@@ -6,4 +10,13 @@ grammar Schemer
       end
     }
   end
+
+  rule list
+    '(' atom (' ' atom)* ')' {
+      def to_ast
+        Schemer::List.new
+      end
+    }
+  end
+
 end
