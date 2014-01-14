@@ -1,0 +1,2 @@
+class Schemer::Atom
+end
