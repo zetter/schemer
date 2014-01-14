@@ -1,6 +1,6 @@
 grammar Schemer
   rule atom
-    [a-z]+ {
+    [^\ \( \)]+ {
       def to_ast
         Schemer::Atom.new
       end
