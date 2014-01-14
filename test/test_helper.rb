@@ -10,7 +10,7 @@ module MiniTest::Assertions
 
     begin
       result = Schemer::Parser.parse(code)
-    rescue Exception => exception
+    rescue Schemer::Parser::ParseError => exception
       raise Minitest::Assertion, "Parsing '#{code}' failed with #{exception.message}"
     end
 
