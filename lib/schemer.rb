@@ -1,3 +1,6 @@
+require 'polyglot'
+require 'treetop'
+
 module Schemer
 end
 

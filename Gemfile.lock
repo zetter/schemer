@@ -12,4 +12,5 @@ PLATFORMS
 
 DEPENDENCIES
   minitest
+  polyglot
   treetop
