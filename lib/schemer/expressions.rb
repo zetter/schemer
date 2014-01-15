@@ -12,4 +12,8 @@ class Schemer::Expressions
   def first
     @children.first
   end
+
+  def to_s
+    @children.join(' ')
+  end
 end

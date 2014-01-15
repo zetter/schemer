@@ -24,7 +24,7 @@ grammar Schemer
   rule atom
     [^\ \( \)]+ {
       def to_ast
-        Schemer::Atom.new('atom')
+        Schemer::Atom.new(text_value)
       end
     }
   end

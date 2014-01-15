@@ -25,7 +25,7 @@ describe '1. Toys' do
     assert_kind_of(Schemer::Atom, ast.children.last)
   end
 
-  it 'parses nested lists' do
+  it 'parses lists in lists' do
     assert_parses_to_kind_of(Schemer::List, '((atom turkey) or)')
   end
 
@@ -35,4 +35,32 @@ describe '1. Toys' do
     assert_parses_to_kind_of(Schemer::Expression, '((x y) z)')
     assert_parses_to_kind_of(Schemer::Expression, '(how are you doing so far)')
   end
+
+  it 'parses expressions within lists' do
+    ast = ast_for('(how are you doing so far)')
+    elements = ast.children.first.child.children
+    assert_equal 6, elements.length
+    assert_equal Schemer::Atom.new('how'), elements[0]
+    assert_equal Schemer::Atom.new('are'), elements[1]
+    assert_equal Schemer::Atom.new('you'), elements[2]
+    assert_equal Schemer::Atom.new('doing'), elements[3]
+    assert_equal Schemer::Atom.new('so'), elements[4]
+    assert_equal Schemer::Atom.new('far'), elements[5]
+  end
+
+  it 'parses lists in lists in lists' do
+    code = '(((how) are) ((you) (doing so)) far)'
+    assert_parses_to_kind_of(Schemer::List, code)
+
+    elements = ast_for(code).children.first.child.children
+    assert_equal 3, elements.length
+    assert_equal ['((how) are)', '((you) (doing so))', 'far'], elements.map(&:to_s)
+  end
+
+  it 'parses empty lists' do
+    assert_parses_to_kind_of(Schemer::List, '()')
+    refute_kind_of(Schemer::Atom, ast_for('()').first)
+    assert_parses_to_kind_of(Schemer::List, '(() () () ())')
+  end
+
 end
