@@ -1,26 +1,31 @@
 grammar Schemer
-  rule expression
-    first:(atom / list) (' ' rest:expression)* {
+  rule expressions
+    (expression ' '?)* {
       def to_ast
-        first.to_ast
+        expressions = elements.map{|element| element.expression.to_ast}
+        Schemer::Expressions.new(expressions);
       end
     }
   end
 
   rule list
-    '(' expression ')' {
+    '(' expressions ')' {
       def to_ast
-        Schemer::List.new
+        Schemer::List.new(expressions.to_ast)
       end
     }
+  end
+
+  # A 'S-expression' in the language of the book
+  rule expression
+    (atom / list)
   end
 
   rule atom
     [^\ \( \)]+ {
       def to_ast
-        Schemer::Atom.new
+        Schemer::Atom.new('atom')
       end
     }
   end
-
 end

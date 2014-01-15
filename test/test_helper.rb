@@ -14,12 +14,18 @@ module SchemerHelpers
     end
     result
   end
+
+  def ast_for(code)
+    parse(code).to_ast
+  end
 end
 
 
 module MiniTest::Assertions
   def assert_parses_to_kind_of(klass, code)
-    assert_kind_of klass, parse(code), "Parsing '#{code}'"
+    expressions = ast_for(code)
+    assert_equal 1, expressions.length, "Can #{code}' should only contain expression"
+    assert_kind_of klass, expressions.first, "Parsing '#{code}'"
     true
   end
 end

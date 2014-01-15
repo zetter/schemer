@@ -9,6 +9,6 @@ class Schemer::Parser
     if tree.nil?
       raise ParseError, "Parse error at offset: #{parser.index}"
     end
-    tree.to_ast
+    tree
   end
 end
