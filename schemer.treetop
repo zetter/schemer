@@ -1,6 +1,18 @@
 grammar Schemer
   rule expression
-    atom / list
+    first:(atom / list) (' ' rest:expression)* {
+      def to_ast
+        first.to_ast
+      end
+    }
+  end
+
+  rule list
+    '(' expression ')' {
+      def to_ast
+        Schemer::List.new
+      end
+    }
   end
 
   rule atom
@@ -11,12 +23,6 @@ grammar Schemer
     }
   end
 
-  rule list
-    '(' atom (' ' atom)* ')' {
-      def to_ast
-        Schemer::List.new
-      end
-    }
-  end
+
 
 end

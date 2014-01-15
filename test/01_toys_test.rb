@@ -9,8 +9,14 @@ describe '1. Toys' do
     assert_parses_to_kind_of(Schemer::Atom, '*abc$')
   end
 
-  it 'parses lists' do
+  it 'parses lists and expressions' do
     assert_parses_to_kind_of(Schemer::List, '(atom)')
     assert_parses_to_kind_of(Schemer::List, '(atom turkey or)')
+    assert_parses_to_kind_of(Schemer::Expression, '(atom turkey) or')
+    assert_parses_to_kind_of(Schemer::List, '((atom turkey) or)')
+    assert_parses_to_kind_of(Schemer::Expression, 'xyz')
+    assert_parses_to_kind_of(Schemer::Expression, '(x y z)')
+    assert_parses_to_kind_of(Schemer::Expression, '((x y) z)')
+    assert_parses_to_kind_of(Schemer::Expression, '(how are you doing so far)')
   end
 end

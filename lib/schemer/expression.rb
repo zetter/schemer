@@ -1,0 +1,2 @@
+class Schemer::Expression
+end

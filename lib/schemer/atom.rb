@@ -1,2 +1,2 @@
-class Schemer::Atom
+class Schemer::Atom < Schemer::Expression
 end
