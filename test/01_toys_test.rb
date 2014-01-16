@@ -69,4 +69,9 @@ describe '1. Toys' do
     assert_parses_to_kind_of(Schemer::List, '(() () () ())')
   end
 
+  it 'can use car' do
+    assert_equal_after_running 'a', '(car (a b c))'
+    assert_equal_after_running '(a b c)', '(car ((a b c), x, y z))'
+  end
+
 end

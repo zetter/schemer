@@ -24,6 +24,10 @@ module SchemerHelpers
     result
   end
 
+  def run_code(code)
+    Schemer::Runner.new(ast_for(code)).run
+  end
+
   def ast_for(code)
     parse(code).to_ast
   end
@@ -36,5 +40,11 @@ module MiniTest::Assertions
     assert_equal 1, expressions.length, "Can #{code}' should only contain expression"
     assert_kind_of klass, expressions.first, "Parsing '#{code}'"
     true
+  end
+
+  def assert_equal_after_running(expected, code)
+    expected_ast = ast_for(expected)
+
+    assert_equal(expected_ast, run_code(code))
   end
 end
