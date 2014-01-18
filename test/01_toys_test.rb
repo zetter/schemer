@@ -1,6 +1,8 @@
 require_relative 'test_helper'
 
 describe '1. Toys' do
+  i_suck_and_my_tests_are_order_dependent!
+
   include SchemerHelpers
 
   it 'parses atoms' do
