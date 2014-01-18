@@ -19,3 +19,9 @@ schemes- i.e. (car '(a)). Not sure if there is a reason the book says
 'what is the x of y where y is ...'.
 
 There's also an online interpreter http://repl.it/ this works in.
+
+page 8
+After introduction of cons I've refactored the running logic. I'm thinking
+that the type checking still isn't that nice, and it would be
+good to push that responsibility somewhere else. At the moment atoms have a
+'children' method but I think that is confusing things.
