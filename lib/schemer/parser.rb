@@ -8,7 +8,7 @@ class Schemer::Parser
   def self.parse(string)
     tree = PARSER.parse(string)
     if tree.nil?
-      raise ParseError, "Parse error at offset: #{parser.index}"
+      raise ParseError, "Parse error at offset: #{PARSER.index}"
     end
     tree
   end
