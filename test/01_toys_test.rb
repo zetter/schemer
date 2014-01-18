@@ -79,4 +79,9 @@ describe '1. Toys' do
     assert_raises(Schemer::Runner::RuntimeError) { run_code('(car ())') }
   end
 
+  it 'can use car on nested lists' do
+    assert_equal_after_running '((hotdogs))', '(car (((hotdogs)) (and) (pickle) relish))'
+    # the '(car l)' test skipped as it is already covered above
+  end
+
 end
