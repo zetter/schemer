@@ -77,13 +77,17 @@ describe '1. Toys' do
   end
 
   specify 'car is only defined for non-empty lists' do
-    assert_raises(Schemer::Runner::RuntimeError) { run_code('(car hotdog)') }
-    assert_raises(Schemer::Runner::RuntimeError) { run_code('(car ())') }
+    assert_raises(Schemer::RuntimeError) { run_code('(car hotdog)') }
+    assert_raises(Schemer::RuntimeError) { run_code('(car ())') }
   end
 
   it 'can use car on nested lists' do
     assert_equal_after_running '((hotdogs))', '(car (((hotdogs)) (and) (pickle) relish))'
     # the '(car l)' test skipped as it is already covered above
+  end
+
+  it 'runs all instances of car' do
+    assert_equal_after_running '(hotdogs)', '(car (car (((hotdogs)) (and)) ))'
   end
 
 end
