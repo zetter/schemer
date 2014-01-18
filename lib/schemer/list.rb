@@ -21,6 +21,13 @@ class Schemer::List < Schemer::Expression
         raise Schemer::RuntimeError.new('arg for cdr cannot be an empty list')
       end
       Schemer::List.new(*arg.children.drop(1))
+    elsif children[0] == Schemer::Atom.new('cons')
+      expression = children[1]
+      list = children[2]
+      unless list.is_a? Schemer::List
+        raise Schemer::RuntimeError.new('second arg for cons must be a list')
+      end
+      Schemer::List.new(*list.children.unshift(expression))
     else
       self
     end

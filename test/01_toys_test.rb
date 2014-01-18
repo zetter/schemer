@@ -108,4 +108,16 @@ describe '1. Toys' do
     assert_raises(Schemer::RuntimeError) { run_code('(cdr (car (a (b (c)) d)))') }
   end
 
+  it 'can use cons' do
+    assert_equal_after_running '(peanut butter and jelly)', '(cons peanut (butter and jelly))'
+    assert_equal_after_running '((banana and) peanut butter and jelly)', '(cons (banana and) (peanut butter and jelly))'
+    assert_equal_after_running '(((help) this) is very ((hard) to learn))', '(cons ((help) this) (is very ((hard) to learn)))'
+    assert_equal_after_running '((a b (c)))', '(cons (a b (c)) ())'
+    assert_equal_after_running '(a)', '(cons a ())'
+  end
+
+  specify 'cons is only defined when the second argument is a list' do
+    assert_raises(Schemer::RuntimeError) { run_code('(cons ((a b c)) b)') }
+    assert_raises(Schemer::RuntimeError) { run_code('(cons a b)') }
+  end
 end
