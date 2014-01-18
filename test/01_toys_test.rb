@@ -101,4 +101,11 @@ describe '1. Toys' do
     assert_raises(Schemer::RuntimeError) { run_code('(cdr hotdogs)') }
     assert_raises(Schemer::RuntimeError) { run_code('(cdr ())') }
   end
+
+  it 'can use combinations of car and cdr' do
+    assert_equal_after_running '(x y)', '(car (cdr ((b) (x y) ((c)))))'
+    assert_equal_after_running '(((c)))', '(cdr (cdr ((b) (x y) ((c)))))'
+    assert_raises(Schemer::RuntimeError) { run_code('(cdr (car (a (b (c)) d)))') }
+  end
+
 end
