@@ -2,7 +2,7 @@ class Schemer::Expression
   attr_reader :children
 
   def initialize(*children)
-    @children = children
+    @children = Array(children)
   end
 
   def ==(other_expression)
@@ -11,5 +11,9 @@ class Schemer::Expression
 
   def to_s
     children.to_s
+  end
+
+  def inspect
+    "<#{self.class.to_s} children=#{@children.inspect}>"
   end
 end
