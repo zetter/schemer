@@ -74,4 +74,9 @@ describe '1. Toys' do
     assert_equal_after_running '(a b c)', '(car ((a b c), x, y z))'
   end
 
+  specify 'car is only defined for non-empty lists' do
+    assert_raises(Schemer::Runner::RuntimeError) { run_code('(car hotdog)') }
+    assert_raises(Schemer::Runner::RuntimeError) { run_code('(car ())') }
+  end
+
 end
