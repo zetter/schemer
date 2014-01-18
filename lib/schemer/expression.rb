@@ -1,15 +1,15 @@
 class Schemer::Expression
-  attr_reader :child
+  attr_reader :children
 
-  def initialize(child)
-    @child = child
+  def initialize(*children)
+    @children = children
   end
 
   def ==(other_expression)
-    self.child == other_expression.child
+    self.children == other_expression.children
   end
 
   def to_s
-    child.to_s
+    children.to_s
   end
 end

@@ -18,11 +18,9 @@ describe '1. Toys' do
 
   it 'parses multiple expressions' do
     ast = ast_for('(atom turkey) or')
-    assert_equal 2, ast.children.length
-    assert_kind_of(Schemer::Expression, ast.children.first)
-    assert_kind_of(Schemer::List, ast.children.first)
-    assert_kind_of(Schemer::Expression, ast.children.last)
-    assert_kind_of(Schemer::Atom, ast.children.last)
+    assert_equal 2, ast.length
+    expected = [list(atom('atom'), atom('turkey')), atom('or')]
+    assert_equal expected, ast
   end
 
   it 'parses lists in lists' do
@@ -38,23 +36,31 @@ describe '1. Toys' do
 
   it 'parses expressions within lists' do
     ast = ast_for('(how are you doing so far)')
-    elements = ast.children.first.child.children
-    assert_equal 6, elements.length
-    assert_equal Schemer::Atom.new('how'), elements[0]
-    assert_equal Schemer::Atom.new('are'), elements[1]
-    assert_equal Schemer::Atom.new('you'), elements[2]
-    assert_equal Schemer::Atom.new('doing'), elements[3]
-    assert_equal Schemer::Atom.new('so'), elements[4]
-    assert_equal Schemer::Atom.new('far'), elements[5]
+    assert_equal 6, ast.first.children.length
+    expected = list(
+      atom('how'),
+      atom('are'),
+      atom('you'),
+      atom('doing'),
+      atom('so'),
+      atom('far')
+    )
+    assert_equal [expected], ast
   end
 
   it 'parses lists in lists in lists' do
     code = '(((how) are) ((you) (doing so)) far)'
     assert_parses_to_kind_of(Schemer::List, code)
 
-    elements = ast_for(code).children.first.child.children
-    assert_equal 3, elements.length
-    assert_equal ['((how) are)', '((you) (doing so))', 'far'], elements.map(&:to_s)
+    ast = ast_for(code)
+    assert_equal 3, ast.first.children.length
+
+    expected = list(
+      list(list(atom('how')), atom('are')),
+      list(list(atom('you')), list(atom('doing'), atom('so'))),
+      atom('far')
+    )
+    assert_equal [expected], ast
   end
 
   it 'parses empty lists' do

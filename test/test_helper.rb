@@ -6,6 +6,15 @@ require 'minitest/autorun'
 require File.expand_path './../../lib/schemer', __FILE__
 
 module SchemerHelpers
+
+  def atom(identifier)
+    Schemer::Atom.new(identifier)
+  end
+
+  def list(*expressions)
+    Schemer::List.new(*expressions)
+  end
+
   def parse(code)
     begin
       result = Schemer::Parser.parse(code)

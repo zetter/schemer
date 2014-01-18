@@ -2,8 +2,7 @@ grammar Schemer
   rule expressions
     (expression ' '?)* {
       def to_ast
-        expressions = elements.map{|element| element.expression.to_ast}
-        Schemer::Expressions.new(expressions);
+        elements.map{|element| element.expression.to_ast}
       end
     }
   end
@@ -11,7 +10,7 @@ grammar Schemer
   rule list
     '(' expressions ')' {
       def to_ast
-        Schemer::List.new(expressions.to_ast)
+        Schemer::List.new(*expressions.to_ast)
       end
     }
   end
