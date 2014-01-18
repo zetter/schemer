@@ -1,9 +1,11 @@
-class Schemer::Atom < Schemer::Expression
-  def children
-    @children.first
-  end
+module Schemer
+  class Atom < Expression
+    def children
+      @children.first
+    end
 
-  def run
-    self
+    def run
+      self
+    end
   end
 end
