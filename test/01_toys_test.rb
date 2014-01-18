@@ -90,4 +90,15 @@ describe '1. Toys' do
     assert_equal_after_running '(hotdogs)', '(car (car (((hotdogs)) (and)) ))'
   end
 
+  it 'can use cdr' do
+    assert_equal_after_running '(b c)', '(cdr (a b c))'
+    assert_equal_after_running '(x y z)', '(cdr ((a b c) x y z))'
+    assert_equal_after_running '()', '(cdr (hamburger))'
+    assert_equal_after_running '(t r)', '(cdr ((x) t r))'
+  end
+
+  specify 'cdr is only defined for non empty lists' do
+    assert_raises(Schemer::RuntimeError) { run_code('(cdr hotdogs)') }
+    assert_raises(Schemer::RuntimeError) { run_code('(cdr ())') }
+  end
 end
