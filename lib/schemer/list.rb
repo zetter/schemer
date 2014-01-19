@@ -1,8 +1,8 @@
 module Schemer
   class List < Expression
     def run
-      @children = children.map(&:run)
-      Function.new(children).execute
+      run_children = children.map(&:run)
+      Function.new(run_children).execute
     end
 
     def list?
