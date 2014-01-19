@@ -4,43 +4,26 @@ module Schemer
       @children = children.map(&:run)
 
       if function == Atom.new('car')
-        raise RuntimeError.new('arg for car must be a list') unless arg.list?
-        raise RuntimeError.new('arg for car cannot be an empty list') if arg.empty?
+        raise RuntimeError.new('arg for car must be a non-empty list') if !arg.list? || arg.empty?
         arg.children[0]
       elsif function == Atom.new('cdr')
-        raise RuntimeError.new('arg for cdr must be a list') unless arg.list?
-        raise RuntimeError.new('arg for cdr cannot be an empty list') if arg.empty?
+        raise RuntimeError.new('arg for cdr must be a non-empty list') if !arg.list? || arg.empty?
         List.new(*arg.children.drop(1))
       elsif function == Atom.new('cons')
         raise RuntimeError.new('second arg for cons must be a list') unless arg_2.list?
         List.new(*arg_2.children.unshift(arg_1))
       elsif function == Atom.new('null?')
         raise RuntimeError.new('arg for cdr must be a list') unless arg.list?
-        if arg == List.new
-          Atom.new('#t')
-        else
-          Atom.new('#f')
-        end
+        to_true_or_false(arg == List.new)
       elsif function == Atom.new('quote')
         List.new
       elsif function == Atom.new('atom?')
-        if arg.atom?
-          Atom.new('#t')
-        else
-          Atom.new('#f')
-        end
+         to_true_or_false(arg.atom?)
       elsif function == Atom.new('eq?')
-        unless arg_1.atom? && arg_2.atom?
-          raise RuntimeError.new('args for eql must be atoms')
-        end
-        unless arg_1.non_numeric? && arg_2.non_numeric?
+        unless arg_1.atom? && arg_2.atom? && arg_1.non_numeric? && arg_2.non_numeric?
           raise RuntimeError.new('args for eql must non-numeric atoms')
         end
-        if arg_1 == arg_2
-          Atom.new('#t')
-        else
-          Atom.new('#f')
-        end
+        to_true_or_false(arg_1 == arg_2)
       else
         self
       end
@@ -65,6 +48,14 @@ module Schemer
 
     def function
       children[0]
+    end
+
+    def to_true_or_false(boolean)
+      if boolean
+        Atom.new('#t')
+      else
+        Atom.new('#f')
+      end
     end
 
     def empty?
