@@ -11,16 +11,16 @@ module Schemer
       when nil
         List.new
       when Atom.new('car')
-        raise RuntimeError.new('arg for car must be a non-empty list') if !arg.list? || arg.empty?
+        abort('arg for car must be a non-empty list') if !arg.list? || arg.empty?
         arg.children[0]
       when Atom.new('cdr')
-        raise RuntimeError.new('arg for cdr must be a non-empty list') if !arg.list? || arg.empty?
+        abort('arg for cdr must be a non-empty list') if !arg.list? || arg.empty?
         List.new(arg.children.drop(1))
       when Atom.new('cons')
-        raise RuntimeError.new('second arg for cons must be a list') unless arg_2.list?
+        abort('second arg for cons must be a list') unless arg_2.list?
         List.new(arg_2.children.unshift(arg_1))
       when Atom.new('null?')
-        raise RuntimeError.new('arg for cdr must be a list') unless arg.list?
+        abort('arg for cdr must be a list') unless arg.list?
         to_true_or_false(arg == List.new)
       when Atom.new('quote')
         List.new
@@ -28,7 +28,7 @@ module Schemer
          to_true_or_false(arg.atom?)
       when Atom.new('eq?')
         unless arg_1.atom? && arg_2.atom? && arg_1.non_numeric? && arg_2.non_numeric?
-          raise RuntimeError.new('args for eql must non-numeric atoms')
+          abort('args for eql must non-numeric atoms')
         end
         to_true_or_false(arg_1 == arg_2)
       else
@@ -37,6 +37,10 @@ module Schemer
     end
 
     private
+
+    def abort(message)
+      raise RuntimeError.new(message)
+    end
 
     def arguments
       expressions.drop(1)
