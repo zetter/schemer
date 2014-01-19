@@ -14,10 +14,10 @@ module Schemer
         raise RuntimeError.new('arg for cdr cannot be an empty list') if arg.empty?
         List.new(*arg.children.drop(1))
       elsif function == Atom.new('cons')
-        expression = arguments[0]
-        list = arguments[1]
-        raise RuntimeError.new('second arg for cons must be a list') unless list.list?
-        List.new(*list.children.unshift(expression))
+        arg_1 = arguments[0]
+        arg_2 = arguments[1]
+        raise RuntimeError.new('second arg for cons must be a list') unless arg_2.list?
+        List.new(*arg_2.children.unshift(arg_1))
       elsif function == Atom.new('null?')
         arg = arguments.first
         raise RuntimeError.new('arg for cdr must be a list') unless arg.list?
@@ -29,19 +29,22 @@ module Schemer
       elsif function == Atom.new('quote')
         List.new
       elsif function == Atom.new('atom?')
-        if arguments.first.atom?
+        arg = arguments.first
+        if arg.atom?
           Atom.new('#t')
         else
           Atom.new('#f')
         end
       elsif function == Atom.new('eq?')
-        unless arguments[0].atom? && arguments[1].atom?
+        arg_1 = arguments[0]
+        arg_2 = arguments[1]
+        unless arg_1.atom? && arg_2.atom?
           raise RuntimeError.new('args for eql must be atoms')
         end
-        unless arguments[0].non_numeric? && arguments[1].non_numeric?
+        unless arg_1.non_numeric? && arg_2.non_numeric?
           raise RuntimeError.new('args for eql must non-numeric atoms')
         end
-        if arguments[0] == arguments[1]
+        if arg_1 == arg_2
           Atom.new('#t')
         else
           Atom.new('#f')
