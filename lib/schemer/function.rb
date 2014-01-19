@@ -28,7 +28,7 @@ module Schemer
         to_true_or_false(arg.atom?)
       when Atom.new('eq?')
         unless arg_1.atom? && arg_2.atom? && arg_1.non_numeric? && arg_2.non_numeric?
-          abort('args for eql must non-numeric atoms')
+          abort('args for eq? must non-numeric atoms')
         end
         to_true_or_false(arg_1 == arg_2)
       else
