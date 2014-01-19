@@ -47,4 +47,8 @@ module MiniTest::Assertions
 
     assert_equal(expected_ast, run_code(code))
   end
+
+  def assert_no_answer(code)
+    assert_raises(Schemer::RuntimeError) { run_code(code) }
+  end
 end

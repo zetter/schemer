@@ -77,8 +77,8 @@ describe '1. Toys' do
   end
 
   specify 'car is only defined for non-empty lists' do
-    assert_raises(Schemer::RuntimeError) { run_code('(car hotdog)') }
-    assert_raises(Schemer::RuntimeError) { run_code('(car ())') }
+    assert_no_answer '(car hotdog)'
+    assert_no_answer '(car ())'
   end
 
   it 'can use car on nested lists' do
@@ -98,14 +98,14 @@ describe '1. Toys' do
   end
 
   specify 'cdr is only defined for non empty lists' do
-    assert_raises(Schemer::RuntimeError) { run_code('(cdr hotdogs)') }
-    assert_raises(Schemer::RuntimeError) { run_code('(cdr ())') }
+    assert_no_answer '(cdr hotdogs)'
+    assert_no_answer '(cdr ())'
   end
 
   it 'can use combinations of car and cdr' do
     assert_equal_after_running '(x y)', '(car (cdr ((b) (x y) ((c)))))'
     assert_equal_after_running '(((c)))', '(cdr (cdr ((b) (x y) ((c)))))'
-    assert_raises(Schemer::RuntimeError) { run_code('(cdr (car (a (b (c)) d)))') }
+    assert_no_answer '(cdr (car (a (b (c)) d)))'
   end
 
   it 'can use cons' do
@@ -117,8 +117,8 @@ describe '1. Toys' do
   end
 
   specify 'cons is only defined when the second argument is a list' do
-    assert_raises(Schemer::RuntimeError) { run_code('(cons ((a b c)) b)') }
-    assert_raises(Schemer::RuntimeError) { run_code('(cons a b)') }
+    assert_no_answer '(cons ((a b c)) b)'
+    assert_no_answer '(cons a b)'
   end
 
   it 'can use combinations of cons, car and cdr' do
@@ -133,7 +133,7 @@ describe '1. Toys' do
   end
 
   specify 'null is only defined for lists' do
-    assert_raises(Schemer::RuntimeError) { run_code('(null? spaghetti)') }
+    assert_no_answer '(null? spaghetti)'
   end
 
   it 'can use atom? to check for atoms' do
@@ -155,13 +155,13 @@ describe '1. Toys' do
   end
 
   specify 'eq? is only defined for non numeric atoms' do
-    assert_raises(Schemer::RuntimeError) { run_code('(eq? () (stawberry))') }
-    assert_raises(Schemer::RuntimeError) { run_code('(eq? 6 7)') }
+    assert_no_answer '(eq? () (stawberry))'
+    assert_no_answer '(eq? 6 7)'
   end
 
   it 'can use eq with combinations of car and cdr' do
     assert_equal_after_running '#t', '(eq? (car (Mary had a little lamb chop)) Mary)'
-    assert_raises(Schemer::RuntimeError) { run_code('(eq? (cdr (soured milk)) milk)') }
+    assert_no_answer '(eq? (cdr (soured milk)) milk)'
     assert_equal_after_running '#t', '(eq? (car (beans beans beans we need jelly beans)) (car (cdr (beans beans beans we need jelly beans)) ))'
   end
 end
