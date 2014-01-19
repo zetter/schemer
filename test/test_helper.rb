@@ -12,7 +12,7 @@ module SchemerHelpers
   end
 
   def list(*expressions)
-    Schemer::List.new(*expressions)
+    Schemer::List.new(expressions)
   end
 
   def parse(code)

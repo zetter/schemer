@@ -10,7 +10,7 @@ grammar Schemer
   rule list
     '(' expressions ')' {
       def to_ast
-        Schemer::List.new(*expressions.to_ast)
+        Schemer::List.new(expressions.to_ast)
       end
     }
   end

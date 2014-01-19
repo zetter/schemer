@@ -2,7 +2,7 @@ module Schemer
   class Expression
     attr_reader :children
 
-    def initialize(*children)
+    def initialize(children = [])
       @children = Array(children)
     end
 

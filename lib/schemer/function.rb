@@ -15,10 +15,10 @@ module Schemer
         arg.children[0]
       when Atom.new('cdr')
         raise RuntimeError.new('arg for cdr must be a non-empty list') if !arg.list? || arg.empty?
-        List.new(*arg.children.drop(1))
+        List.new(arg.children.drop(1))
       when Atom.new('cons')
         raise RuntimeError.new('second arg for cons must be a list') unless arg_2.list?
-        List.new(*arg_2.children.unshift(arg_1))
+        List.new(arg_2.children.unshift(arg_1))
       when Atom.new('null?')
         raise RuntimeError.new('arg for cdr must be a list') unless arg.list?
         to_true_or_false(arg == List.new)
@@ -32,7 +32,7 @@ module Schemer
         end
         to_true_or_false(arg_1 == arg_2)
       else
-        List.new(*expressions)
+        List.new(expressions)
       end
     end
 
