@@ -135,4 +135,17 @@ describe '1. Toys' do
   specify 'null is only defined for lists' do
     assert_raises(Schemer::RuntimeError) { run_code('(null? spaghetti)') }
   end
+
+  it 'can use atom? to check for atoms' do
+    assert_equal_after_running '#t', '(atom? Harry)'
+    assert_equal_after_running '#f', '(atom? (Harry had a heap of apples))'
+  end
+
+  it 'can use atom? with car and cdr' do
+    assert_equal_after_running '#t', '(atom? (car (Harry had a heap of apples)))'
+    assert_equal_after_running '#f', '(atom? (cdr (Harry had a heap of apples)))'
+    assert_equal_after_running '#f', '(atom? (cdr (Harry)))'
+    assert_equal_after_running '#t', '(atom? (car (cdr (swing low sweet cheery oat))))'
+    assert_equal_after_running '#f', '(atom? (car (cdr (swing (low sweet) cheery oat))))'
+  end
 end

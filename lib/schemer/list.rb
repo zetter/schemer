@@ -40,6 +40,12 @@ module Schemer
         end
       elsif function == Atom.new('quote')
         List.new
+      elsif function == Atom.new('atom?')
+        if arguments.first.is_a? Atom
+          Atom.new('#t')
+        else
+          Atom.new('#f')
+        end
       else
         self
       end
