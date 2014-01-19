@@ -120,4 +120,19 @@ describe '1. Toys' do
     assert_raises(Schemer::RuntimeError) { run_code('(cons ((a b c)) b)') }
     assert_raises(Schemer::RuntimeError) { run_code('(cons a b)') }
   end
+
+  it 'can use combinations of cons, car and cdr' do
+    assert_equal_after_running '(a b)', '(cons a (car ((b) c d)))'
+    assert_equal_after_running '(a c d)', '(cons a (cdr ((b) c d)))'
+  end
+
+  it 'can use null? to check for empty lists' do
+    assert_equal_after_running '#t', '(null? ())'
+    assert_equal_after_running '#t', '(null? (quote ()))'
+    assert_equal_after_running '#f', '(null? (a b c))'
+  end
+
+  specify 'null is only defined for lists' do
+    assert_raises(Schemer::RuntimeError) { run_code('(null? spaghetti)') }
+  end
 end

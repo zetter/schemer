@@ -28,6 +28,18 @@ module Schemer
           raise RuntimeError.new('second arg for cons must be a list')
         end
         List.new(*list.children.unshift(expression))
+      elsif function == Atom.new('null?')
+        arg = arguments.first
+        unless arg.is_a? List
+          raise RuntimeError.new('arg for cdr must be a list')
+        end
+        if arg == List.new
+          Atom.new('#t')
+        else
+          Atom.new('#f')
+        end
+      elsif function == Atom.new('quote')
+        List.new
       else
         self
       end
