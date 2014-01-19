@@ -17,15 +17,15 @@ module SchemerHelpers
 
   def parse(code)
     begin
-      result = Schemer::Parser.parse(code)
-    rescue Schemer::Parser::ParseError => exception
+      result = Schemer.parse(code)
+    rescue Schemer::ParseError => exception
       raise Minitest::Assertion, "Parsing '#{code}' failed with #{exception.message}"
     end
     result
   end
 
   def run_code(code)
-    Schemer::Runner.new(ast_for(code)).run
+    Schemer.run(code)
   end
 
   def ast_for(code)
