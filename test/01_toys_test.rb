@@ -6,16 +6,16 @@ describe '1. Toys' do
   include SchemerHelpers
 
   it 'parses atoms' do
-    assert_parses_to_kind_of(Schemer::Atom, 'atom')
-    assert_parses_to_kind_of(Schemer::Atom, 'turkey')
-    assert_parses_to_kind_of(Schemer::Atom, '1492')
-    assert_parses_to_kind_of(Schemer::Atom, 'u')
-    assert_parses_to_kind_of(Schemer::Atom, '*abc$')
+    assert_parses_to_kind_of Schemer::Atom, 'atom'
+    assert_parses_to_kind_of Schemer::Atom, 'turkey'
+    assert_parses_to_kind_of Schemer::Atom, '1492'
+    assert_parses_to_kind_of Schemer::Atom, 'u'
+    assert_parses_to_kind_of Schemer::Atom, '*abc$'
   end
 
   it 'parses lists and expressions' do
-    assert_parses_to_kind_of(Schemer::List, '(atom)')
-    assert_parses_to_kind_of(Schemer::List, '(atom turkey or)')
+    assert_parses_to_kind_of Schemer::List, '(atom)'
+    assert_parses_to_kind_of Schemer::List, '(atom turkey or)'
   end
 
   it 'parses multiple expressions' do
@@ -26,14 +26,14 @@ describe '1. Toys' do
   end
 
   it 'parses lists in lists' do
-    assert_parses_to_kind_of(Schemer::List, '((atom turkey) or)')
+    assert_parses_to_kind_of Schemer::List, '((atom turkey) or)'
   end
 
   specify 'lists and atoms are expressions' do
-    assert_parses_to_kind_of(Schemer::Expression, 'xyz')
-    assert_parses_to_kind_of(Schemer::Expression, '(x y z)')
-    assert_parses_to_kind_of(Schemer::Expression, '((x y) z)')
-    assert_parses_to_kind_of(Schemer::Expression, '(how are you doing so far)')
+    assert_parses_to_kind_of Schemer::Expression, 'xyz'
+    assert_parses_to_kind_of Schemer::Expression, '(x y z)'
+    assert_parses_to_kind_of Schemer::Expression, '((x y) z)'
+    assert_parses_to_kind_of Schemer::Expression, '(how are you doing so far)'
   end
 
   it 'parses expressions within lists' do
@@ -52,7 +52,7 @@ describe '1. Toys' do
 
   it 'parses lists in lists in lists' do
     code = '(((how) are) ((you) (doing so)) far)'
-    assert_parses_to_kind_of(Schemer::List, code)
+    assert_parses_to_kind_of Schemer::List, code
 
     ast = ast_for(code)
     assert_equal 3, ast.first.children.length
@@ -66,9 +66,9 @@ describe '1. Toys' do
   end
 
   it 'parses empty lists' do
-    assert_parses_to_kind_of(Schemer::List, '()')
+    assert_parses_to_kind_of Schemer::List, '()'
     refute_kind_of(Schemer::Atom, ast_for('()').first)
-    assert_parses_to_kind_of(Schemer::List, '(() () () ())')
+    assert_parses_to_kind_of Schemer::List, '(() () () ())'
   end
 
   it 'can use car to get the first expression in a list' do
