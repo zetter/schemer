@@ -7,5 +7,9 @@ module Schemer
     def run
       self
     end
+
+    def non_numeric?
+      !(children =~ /^\d*$/)
+    end
   end
 end

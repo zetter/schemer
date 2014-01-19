@@ -148,4 +148,20 @@ describe '1. Toys' do
     assert_equal_after_running '#t', '(atom? (car (cdr (swing low sweet cheery oat))))'
     assert_equal_after_running '#f', '(atom? (car (cdr (swing (low sweet) cheery oat))))'
   end
+
+  it 'can use eq?' do
+    assert_equal_after_running '#t', '(eq? Harry Harry)'
+    assert_equal_after_running '#f', '(eq? margarine butter)'
+  end
+
+  specify 'eq? is only defined for non numeric atoms' do
+    assert_raises(Schemer::RuntimeError) { run_code('(eq? () (stawberry))') }
+    assert_raises(Schemer::RuntimeError) { run_code('(eq? 6 7)') }
+  end
+
+  it 'can use eq with combinations of car and cdr' do
+    assert_equal_after_running '#t', '(eq? (car (Mary had a little lamb chop)) Mary)'
+    assert_raises(Schemer::RuntimeError) { run_code('(eq? (cdr (soured milk)) milk)') }
+    assert_equal_after_running '#t', '(eq? (car (beans beans beans we need jelly beans)) (car (cdr (beans beans beans we need jelly beans)) ))'
+  end
 end

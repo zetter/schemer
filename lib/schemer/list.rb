@@ -46,6 +46,18 @@ module Schemer
         else
           Atom.new('#f')
         end
+      elsif function == Atom.new('eq?')
+        unless arguments[0].is_a?(Atom) && arguments[1].is_a?(Atom)
+          raise RuntimeError.new('args for eql must be atoms')
+        end
+        unless arguments[0].non_numeric? && arguments[1].non_numeric?
+          raise RuntimeError.new('args for eql must non-numeric atoms')
+        end
+        if arguments[0] == arguments[1]
+          Atom.new('#t')
+        else
+          Atom.new('#f')
+        end
       else
         self
       end
