@@ -14,6 +14,14 @@ module Schemer
       children.to_s
     end
 
+    def atom?
+      false
+    end
+
+    def list?
+      false
+    end
+
     def inspect
       "<#{self.class.to_s} children=#{@children.inspect}>"
     end

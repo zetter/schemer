@@ -8,6 +8,10 @@ module Schemer
       self
     end
 
+    def atom?
+      true
+    end
+
     def non_numeric?
       !(children =~ /^\d*$/)
     end
