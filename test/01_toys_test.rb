@@ -71,7 +71,7 @@ describe '1. Toys' do
     assert_parses_to_kind_of(Schemer::List, '(() () () ())')
   end
 
-  it 'can use car' do
+  it 'can use car to get the first expression in a list' do
     assert_equal_after_running 'a', '(car (a b c))'
     assert_equal_after_running '(a b c)', '(car ((a b c), x, y z))'
   end
@@ -83,14 +83,13 @@ describe '1. Toys' do
 
   it 'can use car on nested lists' do
     assert_equal_after_running '((hotdogs))', '(car (((hotdogs)) (and) (pickle) relish))'
-    # the '(car l)' test skipped as it is already covered above
   end
 
-  it 'runs all instances of car' do
+  it 'runs nested car functions' do
     assert_equal_after_running '(hotdogs)', '(car (car (((hotdogs)) (and)) ))'
   end
 
-  it 'can use cdr' do
+  it 'can use cdr to get the tail of a list' do
     assert_equal_after_running '(b c)', '(cdr (a b c))'
     assert_equal_after_running '(x y z)', '(cdr ((a b c) x y z))'
     assert_equal_after_running '()', '(cdr (hamburger))'
@@ -108,7 +107,7 @@ describe '1. Toys' do
     assert_no_answer '(cdr (car (a (b (c)) d)))'
   end
 
-  it 'can use cons' do
+  it 'can use cons to combine two lists' do
     assert_equal_after_running '(peanut butter and jelly)', '(cons peanut (butter and jelly))'
     assert_equal_after_running '((banana and) peanut butter and jelly)', '(cons (banana and) (peanut butter and jelly))'
     assert_equal_after_running '(((help) this) is very ((hard) to learn))', '(cons ((help) this) (is very ((hard) to learn)))'
@@ -149,7 +148,7 @@ describe '1. Toys' do
     assert_equal_after_running '#f', '(atom? (car (cdr (swing (low sweet) cheery oat))))'
   end
 
-  it 'can use eq?' do
+  it 'can use eq? to find if two atoms are equal' do
     assert_equal_after_running '#t', '(eq? Harry Harry)'
     assert_equal_after_running '#f', '(eq? margarine butter)'
   end
