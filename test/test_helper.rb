@@ -39,7 +39,6 @@ module MiniTest::Assertions
     expressions = ast_for(code)
     assert_equal 1, expressions.length, "Can #{code}' should only contain expression"
     assert_kind_of klass, expressions.first, "Parsing '#{code}'"
-    true
   end
 
   def assert_equal_after_running(expected, code)
